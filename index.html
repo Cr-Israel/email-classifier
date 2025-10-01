@@ -194,7 +194,8 @@
             if (text) body.append('text', text);
 
             // Backend API endpoint
-            const endpoint = 'http://localhost:8000/process_email';
+            // const endpoint = 'http://localhost:8000/process_email';
+            const endpoint = 'https://email-classifier-back.onrender.com/process_email';
 
             // Make API request to backend
             const response = await fetch(endpoint, { 
