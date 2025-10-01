@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+    <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Email Classifier & Auto-Reply</title>
-    <meta name="description" content="Upload or paste an email to classify and get an auto-reply." />
+    <title>Classificador de Email & Resposta Automática</title>
+    <meta name="description" content="Faça upload ou cole um email para classificar e obter uma resposta automática." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -16,8 +16,8 @@
         <div class="brand">
           <div class="logo" aria-hidden="true"></div>
           <div>
-            <div class="title">Email Classifier & Auto-Reply</div>
-            <div class="subtitle">Upload a file or paste email text, then process.</div>
+            <div class="title">Classificador de Email & Resposta Automática</div>
+            <div class="subtitle">Faça upload de um arquivo ou cole o texto do email, depois processe.</div>
           </div>
         </div>
       </header>
@@ -25,56 +25,56 @@
       <div class="grid">
         <!-- Input Card -->
         <section class="card" aria-labelledby="input-section-title">
-          <h2 id="input-section-title" class="section-title">Upload or Paste Email</h2>
+          <h2 id="input-section-title" class="section-title">Upload ou Cole Email</h2>
           <form id="email-form" novalidate>
             <div class="form-row">
-              <label for="file-input">File upload (.txt or .pdf)</label>
-              <div id="file-drop" class="file-drop" tabindex="0" role="button" aria-label="Drop your file here or use the choose file button">
-                <span id="file-drop-text">Drop your file here or</span>
-                <label for="file-input" class="file-label">Choose file</label>
+              <label for="file-input">Upload de arquivo (.txt ou .pdf)</label>
+              <div id="file-drop" class="file-drop" tabindex="0" role="button" aria-label="Arraste seu arquivo aqui ou use o botão escolher arquivo">
+                <span id="file-drop-text">Arraste seu arquivo aqui ou</span>
+                <label for="file-input" class="file-label">Escolher arquivo</label>
                 <input id="file-input" class="file-input" type="file" accept=".txt,.pdf,application/pdf,text/plain" />
               </div>
-              <div class="hint">Max 10MB. Supported: .txt, .pdf</div>
+              <div class="hint">Máx 10MB. Suportados: .txt, .pdf</div>
             </div>
 
-            <div class="divider">or</div>
+            <div class="divider">ou</div>
 
             <div class="form-row">
-              <label for="text-input">Paste email text</label>
-              <textarea id="text-input" placeholder="Paste the full email content here..."></textarea>
-              <div class="hint">Provide either a file or pasted text. Only one is required.</div>
+              <label for="text-input">Cole o texto do email</label>
+              <textarea id="text-input" placeholder="Cole o conteúdo completo do email aqui..."></textarea>
+              <div class="hint">Forneça um arquivo ou texto colado. Apenas um é necessário.</div>
             </div>
 
             <div class="actions">
-              <button type="button" id="clear-btn" class="btn btn-secondary">Clear</button>
-              <button type="submit" id="process-btn" class="btn btn-primary">Process Email</button>
+              <button type="button" id="clear-btn" class="btn btn-secondary">Limpar</button>
+              <button type="submit" id="process-btn" class="btn btn-primary">Processar Email</button>
             </div>
           </form>
         </section>
 
         <!-- Results Card -->
         <section class="card" aria-labelledby="results-section-title">
-          <h2 id="results-section-title" class="section-title">Results</h2>
+          <h2 id="results-section-title" class="section-title">Resultados</h2>
           <div id="results" class="result">
-            <div id="category-pill" class="pill">Category: —</div>
+            <div id="category-pill" class="pill">Categoria: —</div>
 
             <div class="result-body" style="margin-top: 10px;">
               <div>
-                <div class="hint" style="margin-bottom: 6px;">Detected Category</div>
+                <div class="hint" style="margin-bottom: 6px;">Categoria Detectada</div>
                 <div id="category-result" class="muted-box">—</div>
               </div>
               <div>
-                <div class="hint" style="margin-bottom: 6px;">Suggested Automatic Reply</div>
+                <div class="hint" style="margin-bottom: 6px;">Resposta Automática Sugerida</div>
                 <div id="reply-result" class="muted-box">—</div>
               </div>
             </div>
           </div>
-          <div id="results-empty" class="hint">No results yet. Submit an email to see predictions.</div>
+          <div id="results-empty" class="hint">Nenhum resultado ainda. Envie um email para ver as previsões.</div>
         </section>
       </div>
 
       <footer>
-        Built with HTML, CSS, and a pinch of JS.
+        Construído com HTML, CSS e um pouco de JS.
       </footer>
     </div>
 
@@ -100,7 +100,7 @@
           results.classList.remove('visible');
           resultsEmpty.style.display = 'block';
           categoryPill.className = 'pill';
-          categoryPill.textContent = 'Category: —';
+          categoryPill.textContent = 'Categoria: —';
           categoryResult.textContent = '—';
           replyResult.textContent = '—';
         }
@@ -108,10 +108,17 @@
         function setResults(category, reply) {
           results.classList.add('visible');
           resultsEmpty.style.display = 'none';
-          const isProductive = /productive/i.test(category);
+          
+          // More explicit check for productive category
+          const isProductive = category && (
+            category.toLowerCase() === 'productive' || 
+            category.toLowerCase() === 'produtivo' ||
+            category.toLowerCase().includes('productive')
+          );
+          
           categoryPill.className = 'pill ' + (isProductive ? 'success' : 'danger');
-          categoryPill.textContent = 'Category: ' + (isProductive ? 'Productive' : 'Improductive');
-          categoryResult.textContent = isProductive ? 'Productive' : 'Improductive';
+          categoryPill.textContent = 'Categoria: ' + (isProductive ? 'Produtivo' : 'Improdutivo');
+          categoryResult.textContent = isProductive ? 'Produtivo' : 'Improdutivo';
           replyResult.textContent = reply || '—';
         }
 
@@ -119,19 +126,19 @@
           const hasFile = fileInput.files && fileInput.files.length > 0;
           const hasText = (textInput.value || '').trim().length > 0;
           if (!hasFile && !hasText) {
-            alert('Please provide a .txt/.pdf file or paste email text.');
+            alert('Por favor, forneça um arquivo .txt/.pdf ou cole o texto do email.');
             return false;
           }
           if (hasFile) {
             const f = fileInput.files[0];
             if (f.size > MAX_FILE_SIZE) {
-              alert('File is too large. Max 10MB.');
+              alert('Arquivo muito grande. Máx 10MB.');
               return false;
             }
             const allowed = ['text/plain', 'application/pdf'];
             const nameAllowed = /\.(txt|pdf)$/i.test(f.name);
             if (!allowed.includes(f.type) && !nameAllowed) {
-              alert('Unsupported file type. Please upload .txt or .pdf');
+              alert('Tipo de arquivo não suportado. Por favor, faça upload de .txt ou .pdf');
               return false;
             }
           }
@@ -160,12 +167,12 @@
         });
         fileInput.addEventListener('change', () => {
           const f = fileInput.files && fileInput.files[0];
-          fileDropText.textContent = f ? f.name : 'Drop your file here or';
+          fileDropText.textContent = f ? f.name : 'Arraste seu arquivo aqui ou';
         });
 
         clearBtn.addEventListener('click', () => {
           form.reset();
-          fileDropText.textContent = 'Drop your file here or';
+          fileDropText.textContent = 'Arraste seu arquivo aqui ou';
           resetResults();
         });
 
@@ -174,7 +181,7 @@
           if (!validateInput()) return;
 
           processBtn.disabled = true;
-          processBtn.textContent = 'Processing...';
+          processBtn.textContent = 'Processando...';
 
           try {
             // Prepare request body
@@ -186,32 +193,43 @@
             const text = (textInput.value || '').trim();
             if (text) body.append('text', text);
 
-            // Replace with your backend URL
-            const endpoint = '/api/classify';
+            // Backend API endpoint
+            const endpoint = 'http://localhost:8000/process_email';
 
-            // Example request (uncomment to enable when backend is ready)
-            // const response = await fetch(endpoint, { method: 'POST', body });
-            // if (!response.ok) throw new Error('Request failed');
-            // const data = await response.json();
-            // const category = data.category; // expected: "Productive" | "Improductive"
-            // const reply = data.reply;       // expected: string
-            // setResults(category, reply);
-
-            // Mock behavior for demo
-            const mockWait = (ms) => new Promise(r => setTimeout(r, ms));
-            await mockWait(800);
-            const sampleCategory = Math.random() > 0.5 ? 'Productive' : 'Improductive';
-            const sampleReply = sampleCategory === 'Productive'
-              ? 'Thank you for your email. We will proceed with the next steps.'
-              : 'Thanks for reaching out. This seems outside our current scope.';
-            setResults(sampleCategory, sampleReply);
+            // Make API request to backend
+            const response = await fetch(endpoint, { 
+              method: 'POST', 
+              body: body 
+            });
+            
+            if (!response.ok) {
+              const errorText = await response.text();
+              throw new Error(`Erro do servidor (${response.status}): ${errorText}`);
+            }
+            
+            const data = await response.json();
+            console.log(data)
+            
+            // Handle response from backend
+            const category = data.category; // expected: "Productive" | "Improductive"
+            const reply = data.suggestion;       // expected: string
+            
+            if (!category) {
+              throw new Error('Resposta inválida: categoria ausente');
+            }
+            
+            setResults(category, reply);
+            
+            // Clear form after successful submission
+            form.reset();
+            fileDropText.textContent = 'Arraste seu arquivo aqui ou';
 
           } catch (err) {
-            alert('Something went wrong while processing. Please try again.');
+            alert('Algo deu errado durante o processamento. Por favor, tente novamente.');
             console.error(err);
           } finally {
             processBtn.disabled = false;
-            processBtn.textContent = 'Process Email';
+            processBtn.textContent = 'Processar Email';
           }
         });
 
